@@ -1,0 +1,50 @@
+import matplotlib.pyplot as plt
+def play_game():
+    attempts = []
+    correct_per_attempt = []
+
+    while True:
+        n = int(input("Guess the 4 digit number: "))
+
+        attempts.append(len(attempts) + 1) 
+
+        if n == num:
+            print("Great! You guessed the number! You're a Mastermind!")
+            count = sum(1 for i in range(4) if str(n)[i] == str(num)[i])
+            correct_per_attempt.append(count)
+            break
+        else:
+            count = 0
+            n_str = str(n)
+            num_str = str(num)
+
+            correct_digits = ""
+            for i in range(4):
+                if n_str[i] == num_str[i]:
+                    count += 1
+                    correct_digits += n_str[i]
+                else:
+                    correct_digits += "_"
+
+            print("You got", count, "digit(s) correct! The correct digits are:", correct_digits)
+        
+            correct_per_attempt.append(count)
+
+    return attempts, correct_per_attempt
+
+
+attempts, correct_per_attempt = play_game()
+
+plt.plot(attempts, correct_per_attempt, marker='o')
+plt.title('Number of Correct Digits vs. Attempts')
+plt.xlabel('Number of Attempts')
+plt.ylabel('Number of Correct Digits')
+plt.grid(True)
+plt.show()
+
+if correct_per_attempt[-1] == 4:
+    print("Congratulations! You guessed the number correctly in", attempts[-1], "attempts. You're a Mastermind!")
+elif correct_per_attempt[-1] >= 3:
+    print("Well done! You're very close to guessing the number. Keep trying!")
+else:
+    print("Don't worry! You can improve your guessing. Keep practicing!")
